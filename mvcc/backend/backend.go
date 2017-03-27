@@ -19,6 +19,7 @@ import (
 	"hash/crc32"
 	"io"
 	"io/ioutil"
+	"math"
 	"os"
 	"path/filepath"
 	"sync"

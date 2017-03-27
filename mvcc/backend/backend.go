@@ -49,7 +49,7 @@ const (
 	DefaultQuotaBytes = int64(2 * 1024 * 1024 * 1024) // 2GB
 	// MaxQuotaBytes is the maximum number of bytes suggested for a backend
 	// quota. A larger quota may lead to degraded performance.
-	MaxQuotaBytes = int64(8 * 1024 * 1024 * 1024) // 8GB
+	MaxQuotaBytes = math.MaxInt64 // no limit
 )
 
 type Backend interface {

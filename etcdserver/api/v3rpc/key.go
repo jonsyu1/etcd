@@ -146,9 +146,16 @@ func checkDeleteRequest(r *pb.DeleteRangeRequest) error {
 }
 
 func checkTxnRequest(r *pb.TxnRequest, maxTxnOps int) error {
-	plog.Infof("maxTxnOps %v", maxTxnOps)
 	if len(r.Compare) > maxTxnOps || len(r.Success) > maxTxnOps || len(r.Failure) > maxTxnOps {
 		return rpctypes.ErrGRPCTooManyOps
+	}
+
+	if warnThresholdTxnOps := maxTxnOps / 2; len(r.Compare) > warnThresholdTxnOps {
+		plog.Infof("txn compare ops nearing limit: (%d/%d)", len(r.Compare), maxTxnOps)
+	} else if len(r.Success) > warnThresholdTxnOps {
+		plog.Warningf("txn success ops nearing limit: (%d/%d)", len(r.Success), maxTxnOps)
+	} else if len(r.Failure) > warnThresholdTxnOps {
+		plog.Warningf("txn failure ops nearing limit: (%d/%d)", len(r.Failure), maxTxnOps)
 	}
 
 	for _, c := range r.Compare {

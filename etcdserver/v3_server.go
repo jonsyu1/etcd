@@ -36,7 +36,7 @@ const (
 	// TODO: make this a flag? But we probably do not want to
 	// accept large request which might block raft stream. User
 	// specify a large value might end up with shooting in the foot.
-	maxRequestBytes = 1.5 * 1024 * 1024
+	maxRequestBytes = 15 * 1024 * 1024
 
 	// In the health case, there might be a small gap (10s of entries) between
 	// the applied index and committed index.
